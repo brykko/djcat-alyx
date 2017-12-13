@@ -11,7 +11,7 @@ schema = dj.schema(dj.config['names.%s' % __name__], locals())
 #
 # - <class 'actions.models.ProcedureType'>: SKIPPED
 #   What does this do aside from provide a description?
-#   should be inclued for e.g. steps, etc?
+#   should be included for e.g. steps, etc?
 # - <class 'actions.models.BaseAction'>: SKIPPED
 #   Other than key info, does this provide anything other than 'narritive'?
 #   if so, needed?
@@ -87,21 +87,6 @@ class Source(dj.Manual):
     ---
     name:				varchar(255)	# name
     description:			varchar(255)	# description
-    """
-
-
-@schema
-class SubjectRequest(dj.Manual):
-    # <class 'subjects.models.SubjectRequest'>
-    definition = """
-    -> reference.User
-    -> Line
-    subject_request_id:         int                  	# subject request id
-    ---
-    count:                      integer 		# count
-    date_time:                  date    		# date time
-    due_date:                   date    		# due date
-    description:                varchar(255)            # description
     """
 
 
@@ -193,7 +178,6 @@ class FoodRestriction(dj.Manual):
     """
 
 
-
 @schema
 class GenotypeTest(dj.Manual):
     # <class 'subjects.models.GenotypeTest'>
@@ -225,13 +209,22 @@ class Surgery(dj.Manual):
     # <class 'actions.models.Surgery'>
     definition = """
     -> Subject
-    -> reference.BrainLocation
     surgery_start_time:		datetime        # surgery start time
     ---
     surgery_end_time:		datetime        # surgery end time
     outcome_type:		    varchar(255)	# outcome type
     narrative:			    varchar(255)	# narrative
     -> equipment.LabLocation
+    """
+
+
+@schema
+class SurgicalBrainLocation(dj.Manual):
+    # RJG added to link Surgery to reference.BrainLocation.
+    # This allows any number of reference.BrainLocation records to be associated with a Surgery
+    definition = """
+    -> Surgery
+    -> reference.BrainLocation
     """
 
 
@@ -245,7 +238,6 @@ class Implant(dj.Manual):
     protocol_number:		varchar(255)		    # protocol number
     description:	    	varchar(255)		    # description
     adverse_effects:		varchar(255)		    # adverse effects
-    (actual_severity)		-> reference.Severity   # actual severity
     """
 
 

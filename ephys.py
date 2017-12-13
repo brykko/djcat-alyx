@@ -30,9 +30,9 @@ class ExtracellularRecording(dj.Manual):
 
     class Probe(dj.Part):
         # XXX: TODO: split by electrode x/y/z; tie to other data
-        # XXX: why not linked to ExtracellularRecording
         definition = """
-        probe_id:               int             # probe id
+        -> ephys.ExtracellularRecording
+        probe_id                int
         ---
         -> reference.BrainLocation
         -> equipment.ProbeModel
