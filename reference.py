@@ -37,23 +37,6 @@ class BrainLocation(dj.Manual):
 
 
 @schema
-class Severity(dj.Lookup):
-    definition = """
-    severity:			tinyint			# severity
-    ---
-    severity_desc:		varchar(32)		# severity desc
-    """
-    contents = (
-        (0, ''),
-        (1, 'Sub-threshold'),
-        (2, 'Mild'),
-        (3, 'Moderate'),
-        (4, 'Severe'),
-        (5, 'Non-recovery'),
-    )
-
-
-@schema
 class CoordinateTransformation(dj.Manual):
     # <class 'misc.models.CoordinateTransformation'>
     definition = """

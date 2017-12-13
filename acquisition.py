@@ -62,19 +62,6 @@ class Session(dj.Manual):
 
 
 @schema
-class PupilTracking(dj.Manual):
-    # <class 'behavior.models.PupilTracking'>
-    definition = """
-    -> Session
-    pupil_tracking_start_time:  datetime        # start time
-    eye:                        enum("L", "R")  # eye
-    ---
-    pupil_tracking_movie:       longblob        # pupil tracking movie (raw)
-    pupil_trace:                longblob        # x y d
-    """
-
-
-@schema
 class HeadTracking(dj.Manual):
     # <class 'behavior.models.HeadTracking'>
     definition = """

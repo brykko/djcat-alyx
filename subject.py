@@ -16,6 +16,9 @@ schema = dj.schema(dj.config['names.%s' % __name__], locals())
 #   Other than key info, does this provide anything other than 'narritive'?
 #   if so, needed?
 
+# RJG comments:
+# Why use
+
 
 @schema
 class Species(dj.Manual):
@@ -109,7 +112,7 @@ class Subject(dj.Manual):
     subject_id:			int                     # subject id
     ---
     nickname:			varchar(255)		# nickname
-    sex:			enum("M", "F", "U")	# sex
+    sex:			    enum("M", "F", "U")	# sex
     birth_date:			date			# birth date
     ear_mark:			varchar(255)		# ear mark
     (request)                   -> SubjectRequest(subject_request_id)
@@ -140,7 +143,6 @@ class Weighing(dj.Manual):
     weighing_time:		datetime		# date time
     ---
     weight:			float			# weight
-    -> equipment.WeighingScale
     """
 
 
@@ -155,6 +157,18 @@ class WaterAdministration(dj.Manual):
     hydrogel=NULL:		boolean                 # hydrogel
     """
 
+
+@schema
+class FoodAdministration(dj.Manual):
+    # RJG
+    definition = """
+    -> Subject
+    administration_time:	datetime		# date time
+    ---
+    food_administered:		float			# water administered
+    """
+
+
 @schema
 class WaterRestriction(dj.Manual):
     # <class 'actions.models.WaterRestriction'>
@@ -168,24 +182,16 @@ class WaterRestriction(dj.Manual):
 
 
 @schema
-class Caging(dj.Manual):
-    # <class 'subjects.models.Subject'>
+class FoodRestriction(dj.Manual):
+    # RJG
     definition = """
     -> Subject
-    caging_date:                datetime                # caging date
+    restriction_start_time:     datetime	# start time
     ---
-    lamis_cage:			integer			# lamis cage
+    restriction_end_time:       datetime	# end time
+    -> equipment.LabLocation
     """
 
-
-@schema
-class Weaning(dj.Manual):
-    # <class 'subjects.models.Subject'>
-    definition = """
-    -> Subject
-    ---
-    wean_date:			date			# wean date
-    """
 
 
 @schema
@@ -223,8 +229,8 @@ class Surgery(dj.Manual):
     surgery_start_time:		datetime        # surgery start time
     ---
     surgery_end_time:		datetime        # surgery end time
-    outcome_type:		varchar(255)	# outcome type
-    narrative:			varchar(255)	# narrative
+    outcome_type:		    varchar(255)	# outcome type
+    narrative:			    varchar(255)	# narrative
     -> equipment.LabLocation
     """
 
@@ -235,10 +241,10 @@ class Implant(dj.Manual):
     definition = """
     -> Subject
     ---
-    implant_weight:		float			# implant weight
-    protocol_number:		varchar(255)		# protocol number
-    description:		varchar(255)		# description
-    adverse_effects:		varchar(255)		# adverse effects
+    implant_weight:		    float			        # implant weight
+    protocol_number:		varchar(255)		    # protocol number
+    description:	    	varchar(255)		    # description
+    adverse_effects:		varchar(255)		    # adverse effects
     (actual_severity)		-> reference.Severity   # actual severity
     """
 
@@ -258,23 +264,6 @@ class VirusInjection(dj.Manual):
     -> equipment.LabLocation
     """
 
-
-@schema
-class Culling(dj.Manual):
-    # <class 'subjects.models.Subject'>
-    definition = """
-    -> Subject
-    ---
-    cull_method:		varchar(255)		# cull method
-    """
-
-
-@schema
-class Reduction(dj.Manual):
-    definition = """
-    reduced:			boolean			# reduced
-    reduced_date:		date			# reduced date
-    """
 
 @schema
 class OtherAction(dj.Manual):

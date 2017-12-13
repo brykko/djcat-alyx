@@ -50,12 +50,6 @@ class EquipmentModel(dj.Manual):
     description:		varchar(255)	# description
     """
 
-    class WeighingScale(dj.Part):
-        # <class 'equipment.models.WeighingScale'>
-        definition = """
-        -> EquipmentModel
-        """
-
     class LightSource(dj.Part):
         # <class 'equipment.models.LightSource'>
         definition = """
@@ -85,20 +79,6 @@ class EquipmentModel(dj.Manual):
         definition = """
         -> EquipmentModel
         """
-
-
-@schema
-class WeighingScale(dj.Manual):
-    # <class 'equipment.models.Appliance'>
-    # <class 'equipment.models.WeighingScale'>
-    definition = """
-    -> EquipmentModel.WeighingScale
-    -> LabLocation
-    weighing_scale_serial_no:   varchar(255)	# serial no
-    ---
-    description:		varchar(255)	# description
-    descriptive_name:		varchar(255)	# descriptive name
-    """
 
 
 @schema
